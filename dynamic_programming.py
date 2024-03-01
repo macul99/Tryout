@@ -51,4 +51,12 @@ def iter_matrix(i, j, v, m, N, K):
     
     
 iter_matrix(-1,-1,0,0,5,4)
-        
+
+def go_through_cost(k_set, idx_list):
+    rst = []
+    for s in k_set:
+        cost_item_0 = 0 # value at idx locaiton of s
+        if len(idx_list)==1:
+            rst.append((s,cost_item_0))
+    
+        rst.append((s, cost_item_0 + go_through_cost(k_set.difference(s), idx_list[1:])))
