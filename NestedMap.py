@@ -15,6 +15,10 @@ class NestedMap(dict):
             return super().__getitem__(current_node).__getitem__(child_nodes)
     
     def __setitem__(self, key, value):
+        # convert value to NestedMap if it is native dict type
+        if isinstance(value, dict) and isinstance(value, NestedMap)==False:
+            value = NestedMap(value)
+            
         # self is current node
         leaf_node_flag, current_node_key, child_and_following_nodes_key = self._is_leaf_node(key)
         if leaf_node_flag: # set value in dict directly in leaf node
@@ -28,7 +32,7 @@ class NestedMap(dict):
             
             # check child_node exits or not, if not create a new NestedMap object
             child_node = self.get(current_node_key, None)
-            if child_node is None:
+            if child_node is None or isinstance(child_node, NestedMap)==False:
                 child_node = NestedMap()
                 super().__setitem__(current_node_key, child_node)
             
