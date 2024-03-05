@@ -60,3 +60,46 @@ def go_through_cost(k_set, idx_list):
             rst.append((s,cost_item_0))
     
         rst.append((s, cost_item_0 + go_through_cost(k_set.difference(s), idx_list[1:])))
+
+
+def num_of_matching_seq(d, arr):
+    ln = len(arr)
+    
+    diff = [0]*(ln-1)
+    
+    for i in range(1, ln):
+        diff[i-1] = arr[i] - arr[i-1]
+    
+    print(f"diff: {diff}")
+    rst = 0
+    sm = 0
+    
+    for i in range(len(diff)):
+        idx = i
+        sm = diff[idx]
+        state = 0
+        loop_flag = 1
+        
+        while loop_flag:
+            #print(i, idx, sm, state, rst)
+            if sm>d:
+                loop_flag = 0
+            elif sm == d:
+                if state == 0:
+                    state=1
+                    idx += 1
+                    if idx<ln-1:
+                        sm = diff[idx]
+                    else: # end of list
+                        loop_flag = 0
+                elif state == 1:
+                    rst += 1
+                    loop_flag = 0
+            else: # sm<d, coninue add up next diff value
+                idx += 1
+                if idx<ln-1:
+                    sm += diff[idx]
+                else:
+                    loop_flag = 0
+                    
+    return rst
