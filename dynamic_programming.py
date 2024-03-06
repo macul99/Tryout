@@ -129,3 +129,53 @@ def non_divisible_subset(k, s):
         rst += max(buf[i], buf[k-i])
         
     return rst
+
+def to_right(n, r, c):
+    return [[r, c+1+i] for i in range(0,n-c)]
+
+def to_left(n, r, c):
+    return [[r, c-1-i] for i in range(0,c-1)]
+
+def to_top(n, r, c):
+    return [[r+1+i, c] for i in range(0,n-r)]
+
+def to_btm(n, r, c):
+    return [[r-1-i, c] for i in range(0,r-1)]
+
+def to_btm_right(n, r, c):
+    d = min(r-1,n-c)
+    return [[r-1-i, c+1+i] for i in range(0,d)]
+
+def to_btm_left(n, r, c):
+    d = min(r-1,c-1)
+    return [[r-1-i, c-1-i] for i in range(0,d)]
+
+def to_top_right(n, r, c):
+    d = min(n-r,n-c)
+    return [[r+1+i, c+1+i] for i in range(0,d)]
+
+def to_top_left(n, r, c):
+    d = min(n-r,c-1)
+    return [[r+1+i, c-1-i] for i in range(0,d)]
+    
+def queen_attack_2(n, r, c, o):
+    total = (
+        to_right(n, r, c),
+        to_left(n, r, c),
+        to_top(n, r, c),
+        to_btm(n, r, c),
+        to_top_right(n, r, c),
+        to_top_left(n, r, c),
+        to_btm_right(n, r, c),
+        to_btm_left(n, r, c)
+    )
+    
+    rst = 0
+    for tl in total:
+        for t in tl:
+            if t in o:
+                rst += 1
+            else:
+                break
+                
+    return rst
