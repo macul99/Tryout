@@ -103,3 +103,29 @@ def num_of_matching_seq(d, arr):
                     loop_flag = 0
                     
     return rst
+
+def non_divisible_subset(k, s):
+    from collections import defaultdict
+    
+    buf = defaultdict(lambda: 0)
+    
+    for v in s:
+        m = v % k
+        buf[m] += 1
+        
+    print(buf)
+        
+    rst = 0
+    # for all divisible value, only one can be in the subset 
+    if 0 in buf: 
+        rst += 1
+        
+    # if k is even, for all the values if remainder of /k/2, only one such number can be in the subset
+    if k%2==0 and int(k/2) in buf: # if 
+        rst += 1
+        
+    # for remainder of p and q=k-p, only one set of numbers (set with p or q) can be in the subset, choose bigger set
+    for i in range(1, int((k+1)/2)):
+        rst += max(buf[i], buf[k-i])
+        
+    return rst
