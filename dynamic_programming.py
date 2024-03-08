@@ -179,3 +179,25 @@ def queen_attack_2(n, r, c, o):
                 break
                 
     return rst
+
+def larrysArray(A):
+    # Write your code here
+    print(A)
+    ln = len(A)
+    
+    for i in range(1,ln+1):
+        idx = A.index(i)
+        while i>idx+1:
+            if idx+1-i>1:
+                A=A[0:idx-2]+rotate(A[idx-2:idx+1],2)+A[idx+1:]
+                idx -= 2
+            elif idx+1-i==1:
+                if idx+1>=ln:
+                    return 'NO'
+                A=A[0:idx-1]+rotate(A[idx-1:idx+2],1)+A[idx+2:]
+                idx -= 1
+                
+            if i<idx+1:
+                assert False
+    
+    return "YES"
